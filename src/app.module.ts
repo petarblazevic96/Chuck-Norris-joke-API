@@ -12,7 +12,8 @@ import { SequelizeModule } from '@nestjs/sequelize';
     UsersModule,
     SequelizeModule.forRoot({
       dialect: "postgres",
-      models: [],
+      autoLoadModels: true,
+      synchronize: true,
       //TODO transfer this to config later
       host: "localhost",
       port: 5432,
