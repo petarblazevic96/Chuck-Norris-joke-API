@@ -1,7 +1,8 @@
+import { Op } from 'sequelize';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
+
 import { User } from './users.model';
-import { Op } from 'sequelize';
 import { CreateUserDTO } from './create-user.dto';
 
 @Injectable()
