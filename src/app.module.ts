@@ -4,6 +4,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { JokeModule } from './joke/joke.module';
+import { BullModule } from '@nestjs/bull';
 
 @Module({
   imports: [
@@ -19,6 +20,16 @@ import { JokeModule } from './joke/joke.module';
       port: 5432,
       database: "chuck_norris_joke_app"
     }),
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
+      defaultJobOptions: {
+        attempts: 3,
+        timeout: 30000
+      }
+    })
   ]
 })
 export class AppModule {}

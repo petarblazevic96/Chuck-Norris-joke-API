@@ -4,6 +4,9 @@ import { AxiosError } from 'axios';
 import { catchError, firstValueFrom } from 'rxjs';
 import { UsersService } from 'src/users/users.service';
 import { SendJokeDto } from './dto/joke.dto';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class JokeService {
@@ -12,6 +15,8 @@ export class JokeService {
     private CHUCK_NORRIS_API_PATH;
 
     constructor(
+        @InjectQueue("email") 
+        private readonly emailQueue: Queue,
         private usersService: UsersService,
         private httpService: HttpService
     ) {
@@ -30,17 +35,23 @@ export class JokeService {
             )
         );
         const user = await this.usersService.getUserById(id);
+        if (!user) { 
+            //TODO add logger
+            throw new Error("User not found!"); 
+        }
         
-        this.sendEmailToUser(user?.email, { value: data.value, url: data.url });
+        this.addEmailToQueue({ email: user.email, value: data.value, url: data.url });
     }
 
-    private async sendEmailToUser(email: string | undefined, joke: SendJokeDto) {
-        if (email === undefined) {
-            //TODO log error
+    private async addEmailToQueue(joke: SendJokeDto) {
+        if (joke.email === undefined) {
+            //TODO add logger
             console.error("Email was not provided");
             return;
         }
-
-        //TODO send email
+        
+        await this.emailQueue.add("sendEmail", joke, {
+            jobId: uuidv4()
+        });
     }
 }
