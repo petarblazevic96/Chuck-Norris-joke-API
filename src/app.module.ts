@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { SequelizeModule } from '@nestjs/sequelize';
+
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-
-import { SequelizeModule } from '@nestjs/sequelize';
+import { JokeModule } from './joke/joke.module';
 
 @Module({
   imports: [
+    JokeModule,
     AuthModule, 
     UsersModule,
     SequelizeModule.forRoot({
@@ -18,9 +18,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
       host: "localhost",
       port: 5432,
       database: "chuck_norris_joke_app"
-    })
-  ],
-  controllers: [AppController],
-  providers: [AppService],
+    }),
+  ]
 })
 export class AppModule {}
