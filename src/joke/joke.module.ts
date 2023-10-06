@@ -5,7 +5,7 @@ import { JokeService } from './joke.service';
 import { JokeController } from './joke.controller';
 import { UsersModule } from 'src/users/users.module';
 import { BullModule } from '@nestjs/bull';
-import { JokeEmailConsumer } from './joke.consumer';
+import { JokeEmailConsumerModule } from '../consumers/joke/joke-consumer.module';
 
 @Module({
   imports: [
@@ -17,8 +17,9 @@ import { JokeEmailConsumer } from './joke.consumer';
     BullModule.registerQueue({
       name: 'email',
     }),
+    JokeEmailConsumerModule
   ],
   controllers: [JokeController],
-  providers: [JokeService, JokeEmailConsumer],
+  providers: [JokeService],
 })
 export class JokeModule {}

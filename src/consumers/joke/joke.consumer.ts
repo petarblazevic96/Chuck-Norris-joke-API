@@ -1,11 +1,14 @@
 import * as nodemailer from "nodemailer";
 
-import { OnQueueCompleted, OnQueueError, Process, Processor } from "@nestjs/bull";
-import { SendJokeDto } from "./dto/joke.dto";
+import { OnQueueCompleted, Process, Processor } from "@nestjs/bull";
+import { SendJokeDto } from "../../joke/dto/joke.dto";
 import { Job } from "bull";
+import { SendJokeQueueResult } from "../../joke/dto/send-joke-queue-result.dto";
+import { JokeConsumerService } from "./joke-consumer.service";
 
 @Processor("email")
 export class JokeEmailConsumer {
+    constructor(private jokeConsumerService: JokeConsumerService) {}
     private readonly gmailPassword: string = "<password>";
     private readonly gmailEmail: string = "<email>";
 
@@ -18,43 +21,40 @@ export class JokeEmailConsumer {
     });
 
     @Process("sendEmail")
-    async sendEmail(job: Job<SendJokeDto>) {
+    async sendEmail(job: Job<SendJokeDto>): Promise<SendJokeQueueResult> {
         let messageId: string = "";
-        let err: string = "";
-
+        let err: any;
+        
         try {
             const mailOptions = {
                 from: this.gmailEmail,
-                to: job.data.email,
+                to: this.gmailEmail,
                 subject: `Random Chuck Norris fact`,
                 text: `Url: ${job.data.url}\nFact: ${job.data.value}`
             };
-
             const res = await this.transporter.sendMail(mailOptions);
             messageId = res.messageId;
-
-            if (res.accepted.length > 0) {
-                await job.isCompleted();
-            } else {
-                await job.isFailed();
-            }
-            job.progress(100);
         } catch (error) {
             err = error;
         } finally {
-            await job.finished();
-
-            return {
-                id: job.id,
+            const returnValue = {
                 messageId: messageId,
-                error: err
-            }
+                err: err
+            };
+
+            return returnValue;
         }
     }
 
-    @OnQueueError()
-    async onQueueError() {}
-
     @OnQueueCompleted()
-    async onQueueCompleted() {}
+    async onQueueCompleted(job: Job<SendJokeDto>, result: SendJokeQueueResult) {
+        await this.jokeConsumerService.saveJob({
+            jobId: job.id.toString(),
+            email: job.data.email,
+            value: job.data.value,
+            url: job.data.url,
+            messageId: result.messageId,
+            err: result.err?.message
+        });
+    }
 }

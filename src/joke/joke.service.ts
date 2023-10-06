@@ -40,11 +40,11 @@ export class JokeService {
             throw new Error("User not found!"); 
         }
         
-        this.addEmailToQueue({ email: user.email, value: data.value, url: data.url });
+        await this.addEmailToQueue({ email: user.email, value: data.value, url: data.url });
     }
 
     private async addEmailToQueue(joke: SendJokeDto) {
-        if (joke.email === undefined) {
+        if (joke.email === null || joke.email.length === 0) {
             //TODO add logger
             console.error("Email was not provided");
             return;
