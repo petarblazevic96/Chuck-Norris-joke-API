@@ -40,13 +40,14 @@
     "sequelize": "^6.33.0",
     "sequelize-cli": "^6.6.1",
     "sequelize-typescript": "^2.1.5",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "winston": "^3.10.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
-    "@types/express": "^4.17.17",
+    "@types/express": "^4.17.18",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
     "@types/sequelize": "^4.28.16",

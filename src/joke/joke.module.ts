@@ -6,9 +6,11 @@ import { JokeController } from './joke.controller';
 import { UsersModule } from 'src/users/users.module';
 import { BullModule } from '@nestjs/bull';
 import { JokeEmailConsumerModule } from '../consumers/joke/joke-consumer.module';
+import { WinstonLogger } from 'src/logger/logger.module';
 
 @Module({
   imports: [
+    WinstonLogger,
     UsersModule, 
     HttpModule.register({
       timeout: 30000,

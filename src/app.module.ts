@@ -5,9 +5,11 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { JokeModule } from './joke/joke.module';
 import { BullModule } from '@nestjs/bull';
+import { WinstonLogger } from './logger/logger.module';
 
 @Module({
   imports: [
+    WinstonLogger,
     JokeModule,
     AuthModule, 
     UsersModule,
