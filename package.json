@@ -28,6 +28,7 @@
     "@nestjs/jwt": "^10.1.1",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/sequelize": "^10.0.0",
+    "@nestjs/swagger": "^7.1.13",
     "@types/nodemailer": "^6.4.11",
     "@types/uuid": "^9.0.4",
     "argon2": "^0.31.1",
