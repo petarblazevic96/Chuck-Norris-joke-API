@@ -6,32 +6,63 @@ import { UsersModule } from './users/users.module';
 import { JokeModule } from './joke/joke.module';
 import { BullModule } from '@nestjs/bull';
 import { WinstonLogger } from './logger/logger.module';
-
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import configuration from './config/configuration';
+import { JwtModule } from '@nestjs/jwt';
+import { DatabaseConfiguration, RedisConfiguration } from './config/interfaces';
 @Module({
   imports: [
+    ConfigModule.forRoot({ 
+      isGlobal: true,
+      load: [configuration]
+    }),
     WinstonLogger,
     JokeModule,
-    AuthModule, 
     UsersModule,
-    SequelizeModule.forRoot({
-      dialect: "postgres",
-      autoLoadModels: true,
-      synchronize: true,
-      //TODO transfer this to config later
-      host: "localhost",
-      port: 5432,
-      database: "chuck_norris_joke_app"
-    }),
-    BullModule.forRoot({
-      redis: {
-        host: 'localhost',
-        port: 6379,
+    SequelizeModule.forRootAsync({
+      useFactory: (configService: ConfigService) => {
+        const databaseConfig: DatabaseConfiguration | undefined = configService.get<DatabaseConfiguration>("database");
+
+        return {
+          dialect: "postgres",
+          autoLoadModels: true,
+          synchronize: true,
+          host: databaseConfig?.host,
+          port: databaseConfig?.port,
+          database: databaseConfig?.database_name
+        };
       },
-      defaultJobOptions: {
-        attempts: 3,
-        timeout: 30000
-      }
-    })
+      inject: [ConfigService]
+    }),
+    BullModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => {
+        const redisConfig: RedisConfiguration | undefined = configService.get<RedisConfiguration>("redis");
+        
+        return {
+          redis: {
+            host: redisConfig?.host,
+            port: redisConfig?.port,
+          },
+          defaultJobOptions: {
+            attempts: redisConfig?.default_job_options.attempts,
+            timeout: redisConfig?.default_job_options.timeout
+          }
+        };
+      },
+      inject: [ConfigService]
+    }),
+    JwtModule.registerAsync({
+      global: true,
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get<string>("jwt_secret"),
+        signOptions: {
+          expiresIn: "60s"
+        }
+      }),
+      inject: [ConfigService]
+    }),
+    AuthModule
   ]
 })
 export class AppModule {}

@@ -5,20 +5,34 @@ import { SendJokeDto } from "../../joke/dto/joke.dto";
 import { Job } from "bull";
 import { SendJokeQueueResult } from "../../joke/dto/send-joke-queue-result.dto";
 import { JokeConsumerService } from "./joke-consumer.service";
+import { ConfigService } from "@nestjs/config";
 
 @Processor("email")
 export class JokeEmailConsumer {
-    constructor(private jokeConsumerService: JokeConsumerService) {}
-    private readonly gmailPassword: string = "<password>";
-    private readonly gmailEmail: string = "<email>";
+    private gmailPassword: string | undefined;
+    private gmailEmail: string | undefined;
 
-    private transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: this.gmailEmail,
-            pass: this.gmailPassword
+    private transporter;
+
+    constructor(
+        private jokeConsumerService: JokeConsumerService,
+        private configService: ConfigService
+    ) {
+        this.gmailEmail = this.configService.get<string>("EMAIL_OPTIONS_EMAIL");
+        this.gmailPassword = this.configService.get<string>("EMAIL_OPTIONS_PASSWORD");
+
+        if (this.gmailEmail || this.gmailPassword) {
+            throw new Error("Email or password is not set!");
         }
-    });
+
+        this.transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: this.gmailEmail,
+                pass: this.gmailPassword
+            }
+        });
+    }
 
     @Process("sendEmail")
     async sendEmail(job: Job<SendJokeDto>): Promise<SendJokeQueueResult> {

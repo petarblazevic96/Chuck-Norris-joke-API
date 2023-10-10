@@ -8,10 +8,11 @@ import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { v4 as uuidv4 } from 'uuid';
 import { CustomLogger } from 'src/logger/logger.service';
+import { ConfigService } from '@nestjs/config';
+import { ChuckNorrisApi } from 'src/config/interfaces';
 
 @Injectable()
 export class JokeService {
-    //TODO move to config
     private CHUCK_NORRIS_API_URL;
     private CHUCK_NORRIS_API_PATH;
 
@@ -20,20 +21,20 @@ export class JokeService {
         private readonly emailQueue: Queue,
         private usersService: UsersService,
         private httpService: HttpService,
-        private logger: CustomLogger
+        private logger: CustomLogger,
+        private configService: ConfigService
     ) {
-        this.CHUCK_NORRIS_API_URL = "https://api.chucknorris.io/";
-        this.CHUCK_NORRIS_API_PATH = "jokes/random";
+        const config: ChuckNorrisApi | undefined = this.configService.get<ChuckNorrisApi>("chuck_norris_api");
+
+        this.CHUCK_NORRIS_API_URL = config?.api_url;
+        this.CHUCK_NORRIS_API_PATH = config?.api_path;
     }
 
     async getRandomJoke(id: string) {
         const { data } = await firstValueFrom(
             this.httpService.get(`${this.CHUCK_NORRIS_API_URL}/${this.CHUCK_NORRIS_API_PATH}`).pipe(
                 catchError((error: AxiosError) => {
-                    throw new InternalServerErrorException("Error while fetching Chuck Norris joke", {
-                        cause: error.cause,
-                        description: error.code
-                    });
+                    throw new InternalServerErrorException("Error while fetching Chuck Norris joke", error.cause?.message || "GRESKA!!!!!!!");
                 })
             )
         );

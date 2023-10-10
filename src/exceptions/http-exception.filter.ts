@@ -17,12 +17,15 @@ export class HttpExceptionFilter implements ExceptionFilter {
                 HttpStatus.INTERNAL_SERVER_ERROR;
         
         if (exception instanceof InternalServerErrorException) {
+            const exceptionResponse: string | any = exception.getResponse();
+
             const payload = {
                 timestamp: new Date().toISOString(),
                 path: request.originalUrl,
-                message: exception.message,
-                stack: exception.stack
+                stack: exception.stack,
+                error: exceptionResponse instanceof Object ? exceptionResponse["error"] : exceptionResponse
             };
+            
             this.logger.error(exception.message, payload);
         }
 

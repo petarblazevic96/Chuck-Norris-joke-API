@@ -1,9 +1,12 @@
 import * as winston from "winston";
 
-import { LogLevel, LoggerService, Scope } from "@nestjs/common";
+import { Injectable, LogLevel, LoggerService, Scope } from "@nestjs/common";
 import { AbstractConfigSetLevels } from "winston/lib/winston/config";
 import _ from "lodash";
+import { ConfigService } from "@nestjs/config";
+import { EnvConfiguration } from "src/config/interfaces";
 
+@Injectable()
 export class CustomLogger implements LoggerService {
     private nestLogLevels: AbstractConfigSetLevels = {
         fatal: 0,
@@ -15,13 +18,17 @@ export class CustomLogger implements LoggerService {
     };
 
     private logger;
-    private level: string;
+    private level: string = "";
 
-    constructor() {
-        this.level = "verbose";
+    constructor(private configService: ConfigService) {
+        const env: string = process.env.NODE_ENV || "development";
+        const env_configuration = this.configService.get<EnvConfiguration>("env_variables");
+
+        const isLocal = !["staging", "production"].includes(env);
+        this.level = isLocal ? "info" : (env_configuration?.log_level || "debug");
 
         const currentDir = __dirname;
-        const logsDirectory = "logs";
+        const logsDirectory = env_configuration?.log_directory;
         const rootFilePath = `${currentDir}/${logsDirectory}/`;
         
         const format = winston.format.combine(
