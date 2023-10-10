@@ -4,7 +4,8 @@ import { Injectable, LogLevel, LoggerService, Scope } from "@nestjs/common";
 import { AbstractConfigSetLevels } from "winston/lib/winston/config";
 import _ from "lodash";
 import { ConfigService } from "@nestjs/config";
-import { EnvConfiguration } from "src/config/interfaces";
+import { EnvConfiguration } from "../config/interfaces";
+
 
 @Injectable()
 export class CustomLogger implements LoggerService {

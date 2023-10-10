@@ -1,5 +1,5 @@
-import { Op } from 'sequelize';
-import { Injectable } from '@nestjs/common';
+import { Op, ValidationError } from 'sequelize';
+import { ForbiddenException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 
 import { User } from './users.model';
@@ -13,26 +13,51 @@ export class UsersService {
     ) {}
 
     async findUserByEmail(email: string): Promise<User | null> {
-        return this.userModel.findOne({
-            where: {
-                email: {
-                    [Op.eq]: email
+        let user: User | null;
+        try {
+            user = await this.userModel.findOne({
+                where: {
+                    email: {
+                        [Op.eq]: email
+                    }
                 }
-            }
-        });
+            });
+
+            return user;
+        } catch (error) {
+            throw new InternalServerErrorException(error);
+        }
     }
 
-    async createNewUser(user: CreateUserDTO): Promise<User> {
-        return this.userModel.create({...user});
+    async createNewUser(user: CreateUserDTO): Promise<User | null> {
+        let newUser: User;
+        try {
+            newUser = await this.userModel.create({...user});   
+            return newUser;
+        } catch (error) {
+            if (error instanceof ValidationError) {
+                const validationError = error.errors[0] ? error.errors[0].message : error.message
+                throw new ForbiddenException(validationError);
+            } else {
+                throw new InternalServerErrorException(error);
+            }
+        }
     }
 
     async getUserById(id: string): Promise<User | null> {
-        return this.userModel.findOne({
-            where: {
-                id: {
-                    [Op.eq]: id
+        let user: User | null;
+        try {
+            user = await this.userModel.findOne({
+                where: {
+                    id: {
+                        [Op.eq]: id
+                    }
                 }
-            }
-        });
+            });
+
+            return user;
+        } catch (error) {
+            throw new InternalServerErrorException(error);
+        }
     }
 }

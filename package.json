@@ -34,6 +34,7 @@
     "argon2": "^0.31.1",
     "axios": "^1.5.1",
     "bull": "^4.11.3",
+    "jest-mock": "^29.7.0",
     "nodemailer": "^6.9.5",
     "pg": "^8.11.3",
     "pg-hstore": "^2.3.4",
@@ -42,6 +43,7 @@
     "sequelize": "^6.33.0",
     "sequelize-cli": "^6.6.1",
     "sequelize-typescript": "^2.1.5",
+    "sqlite3": "^5.1.6",
     "uuid": "^9.0.1",
     "winston": "^3.10.0"
   },

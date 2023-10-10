@@ -1,9 +1,10 @@
 import { Controller, Get, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { JokeService } from './joke.service';
-import { UserDecorator } from 'src/users/decorators/user.decorator';
-import { UserAuthDto } from 'src/auth/dto/user-auth.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
+
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
+import { UserDecorator } from '../users/decorators/user.decorator';
+import { UserAuthDto } from '../auth/dto/user-auth.dto';
 
 @ApiTags("Joke")
 @Controller('joke')

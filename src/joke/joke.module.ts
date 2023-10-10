@@ -3,10 +3,12 @@ import { HttpModule } from '@nestjs/axios';
 
 import { JokeService } from './joke.service';
 import { JokeController } from './joke.controller';
-import { UsersModule } from 'src/users/users.module';
+
 import { BullModule } from '@nestjs/bull';
 import { JokeEmailConsumerModule } from '../consumers/joke/joke-consumer.module';
-import { WinstonLogger } from 'src/logger/logger.module';
+import { WinstonLogger } from '../logger/logger.module';
+import { UsersModule } from '../users/users.module';
+
 
 @Module({
   imports: [
