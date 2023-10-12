@@ -50,10 +50,12 @@
     $ npm run start:prod
     ```
 ## Docker
+1. Update `EMAIL_OPTIONS_EMAIL` and `EMAIL_OPTIONS_PASSWORD` in the `.docker.env` 
 
-```bash
-$ docker-compose up -d
-```
+2. Run
+    ```bash
+    $ docker-compose up -d
+    ```
 
 ## Documentation
 - Swagger is used for generating the documentation
