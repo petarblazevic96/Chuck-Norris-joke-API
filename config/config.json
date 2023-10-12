@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "backend_service",
-    "password": "pass1234",
+    "username": "<db_user_name>",
+    "password": "<db_user_password>",
     "database": "chuck_norris_joke_app",
     "host": "localhost",
     "dialect": "postgres",
