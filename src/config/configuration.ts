@@ -1,8 +1,10 @@
 export default () => ({
     database: {
         host: process.env.DATABASE_HOST || "localhost",
-        port: process.env.DATABASE_PORT || 5432,
-        database_name: process.env.DATABASE_NAME || "chuck_norris_joke_app"
+        port: process.env.DATABASE_PORT || 5432,
+        database_name: process.env.DATABASE_NAME || "chuck_norris_joke_app",
+        username: process.env.DATABASE_USER,
+        password: process.env.DATABASE_PASSWORD
     },
     redis: {
         host: process.env.REDIS_HOST || "localhost",

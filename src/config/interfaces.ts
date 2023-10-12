@@ -1,7 +1,9 @@
 export interface DatabaseConfiguration {
     host: string;
     port: number;
-    database_name: string
+    database_name: string;
+    username: string;
+    password: string;
 };
 
 export interface RedisConfiguration {

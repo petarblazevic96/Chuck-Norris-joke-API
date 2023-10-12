@@ -29,6 +29,8 @@ import { DatabaseConfiguration, RedisConfiguration } from './config/interfaces';
           synchronize: true,
           host: databaseConfig?.host,
           port: databaseConfig?.port,
+          username: databaseConfig?.username,
+          password: databaseConfig?.password,
           database: databaseConfig?.database_name
         };
       },
