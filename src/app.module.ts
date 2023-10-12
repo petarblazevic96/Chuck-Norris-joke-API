@@ -45,8 +45,8 @@ import { DatabaseConfiguration, RedisConfiguration } from './config/interfaces';
             port: redisConfig?.port,
           },
           defaultJobOptions: {
-            attempts: redisConfig?.default_job_options.attempts,
-            timeout: redisConfig?.default_job_options.timeout
+            attempts: Number(redisConfig?.default_job_options.attempts),
+            timeout: Number(redisConfig?.default_job_options.timeout)
           }
         };
       },

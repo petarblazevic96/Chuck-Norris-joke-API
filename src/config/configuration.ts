@@ -14,7 +14,7 @@ export default () => ({
     },
     email_options: {
         email: process.env.EMAIL_OPTIONS_EMAIL || "",
-        password: process.env.EMAIL_OPTIONS_EMAIL || ""
+        password: process.env.EMAIL_OPTIONS_PASSWORD || ""
     },
     env_variables: {
         port: process.env.PORT || 3000,
