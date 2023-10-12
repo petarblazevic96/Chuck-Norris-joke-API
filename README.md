@@ -24,19 +24,21 @@
         - `EMAIL_OPTIONS_PASSWORD` - application password which can be set on this [link](https://myaccount.google.com/apppasswords)
         - `DATABASE` and `REDIS` part is set based on your local environment
 2. Update `config/config.json` file with your database credentials
-2. Run 
+
+## Manual
+1. Run 
     ```bash 
     $ npm i 
     ```
-3. If the database does not exist run
+2. If the database does not exist run
     ```bash
     $ npx sequelize-cli db:create
     ```
-4. Run the migrations
+3. Run the migrations
     ```bash
     $ npx sequelize-cli db:migrate
     ```
-5. Running the application
+4. Running the application
     ```bash
     # development
     $ npm run start
@@ -47,6 +49,11 @@
     # production mode
     $ npm run start:prod
     ```
+## Docker
+
+```bash
+$ docker-compose up -d
+```
 
 ## Documentation
 - Swagger is used for generating the documentation
