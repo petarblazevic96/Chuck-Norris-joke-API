@@ -28,6 +28,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: chuck-norris-api
+    env_file:
+      - .docker.env
     networks:
       - intranet
     environment:

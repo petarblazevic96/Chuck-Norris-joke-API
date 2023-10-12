@@ -1,5 +1,12 @@
 # Chuck Norris Joke API
 
+## Description
+- REST API build using [NestJS](https://nestjs.com/) and [PostgreSQL](https://www.postgresql.org/) for the database. 
+- API fetches random Chuck Norris joke from external API and sends it to the logged in user on it's email. 
+- JWT was used for the authentication of the user. 
+- [Nodemailer](https://nodemailer.com/) was used for sending emails using gmail account.
+- [Bull](https://github.com/nestjs/bull) queue implementation was used for handling of sending emails to the users.
+- [Winston](https://github.com/winstonjs/winston) logger is used for all of the logging overriding built in logger.
 ## Prerequisites
 
 1. Node v18.x
@@ -10,6 +17,12 @@
 
 1. Copy contents of `.example.env` to `.env`
     - Update the content of the `.env` file
+        - `LOG_LEVEL` - sets logging level
+        - `LOG_DIRECTORY` - sets the directory where the logs will be saved
+        - `JWT_SECRET` - secret used when generating JWT token
+        - `EMAIL_OPTIONS_EMAIL` - gmail account username
+        - `EMAIL_OPTIONS_PASSWORD` - application password which can be set on this [link](https://myaccount.google.com/apppasswords)
+        - `DATABASE` and `REDIS` part is set based on your local environment
 2. Update `config/config.json` file with your database credentials
 2. Run 
     ```bash 
