@@ -5,6 +5,7 @@ import { User } from './users.model';
 import { UsersService } from './users.service';
 
 const oneUser = {
+  id: "newId",
   firstName: 'user 1',
   lastName: 'test 1',
   email: 'user@test1.com',
@@ -53,7 +54,7 @@ describe('UsersService', () => {
       password: 'user_test_1',
     };
 
-    expect(await service.createNewUser(newUser)).toEqual(newUser);
+    expect(await service.createNewUser(newUser)).toEqual(oneUser.id);
   });
 
   it('should find user by email', async () => {

@@ -12,8 +12,8 @@ import {
 } from '@nestjs/bull';
 
 import { SendJokeDto } from '../../joke/dto/joke.dto';
-import { CustomLogger } from '../../logger/logger.service';
 import { JokeConsumerService } from './joke-consumer.service';
+import { CustomLogger } from '../../logger/logger.service';
 import { EmailOptionsConfiguration } from '../../config/interfaces';
 import { SendJokeQueueResult } from '../../joke/dto/send-joke-queue-result.dto';
 

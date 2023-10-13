@@ -34,11 +34,11 @@ export class UsersService {
     }
   }
 
-  async createNewUser(user: CreateUserDTO): Promise<User | null> {
+  async createNewUser(user: CreateUserDTO): Promise<string | null> {
     let newUser: User;
     try {
       newUser = await this.userModel.create({ ...user });
-      return newUser;
+      return newUser.id;
     } catch (error) {
       if (error instanceof ValidationError) {
         const validationError = error.errors[0]

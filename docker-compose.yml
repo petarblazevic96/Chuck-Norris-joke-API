@@ -39,8 +39,6 @@ services:
     depends_on:
       - postgresql
       - redis
-    volumes:
-      - ./src:/app/src
 
 networks:
   intranet:
