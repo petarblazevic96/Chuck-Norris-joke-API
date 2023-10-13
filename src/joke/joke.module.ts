@@ -9,11 +9,10 @@ import { JokeEmailConsumerModule } from '../consumers/joke/joke-consumer.module'
 import { WinstonLogger } from '../logger/logger.module';
 import { UsersModule } from '../users/users.module';
 
-
 @Module({
   imports: [
     WinstonLogger,
-    UsersModule, 
+    UsersModule,
     HttpModule.register({
       timeout: 30000,
       maxRedirects: 5,
@@ -21,7 +20,7 @@ import { UsersModule } from '../users/users.module';
     BullModule.registerQueue({
       name: 'email',
     }),
-    JokeEmailConsumerModule
+    JokeEmailConsumerModule,
   ],
   controllers: [JokeController],
   providers: [JokeService],

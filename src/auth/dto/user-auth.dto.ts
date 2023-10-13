@@ -1,3 +1,3 @@
 export class UserAuthDto {
-    id: string;
-};
+  id: string;
+}

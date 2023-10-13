@@ -6,13 +6,7 @@ import { JokeQueue } from './joke-consumer.model';
 import { WinstonLogger } from '../../logger/logger.module';
 
 @Module({
-  providers: [
-    JokeEmailConsumer,
-    JokeConsumerService
-  ],
-  imports: [
-    SequelizeModule.forFeature([JokeQueue]),
-    WinstonLogger
-  ]
+  providers: [JokeEmailConsumer, JokeConsumerService],
+  imports: [SequelizeModule.forFeature([JokeQueue]), WinstonLogger],
 })
 export class JokeEmailConsumerModule {}

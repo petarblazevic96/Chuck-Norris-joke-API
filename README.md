@@ -23,22 +23,23 @@
         - `EMAIL_OPTIONS_EMAIL` - gmail account username
         - `EMAIL_OPTIONS_PASSWORD` - application password which can be set on this [link](https://myaccount.google.com/apppasswords)
         - `DATABASE` and `REDIS` part is set based on your local environment
-2. Update `config/config.json` file with your database credentials
+2. Update `sequelize/config/config.json` file with your database credentials
 
 ## Manual
 1. Run 
     ```bash 
     $ npm i 
     ```
-2. If the database does not exist run
+2. Move to the `sequelize` directory
+3. If the database does not exist run
     ```bash
     $ npx sequelize-cli db:create
     ```
-3. Run the migrations
+4. Run the migrations
     ```bash
     $ npx sequelize-cli db:migrate
     ```
-4. Running the application
+5. Running the application
     ```bash
     # development
     $ npm run start

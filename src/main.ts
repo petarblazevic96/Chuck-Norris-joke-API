@@ -13,22 +13,22 @@ async function bootstrap() {
 
   app.useLogger(app.get(CustomLogger));
   app.useGlobalFilters(new HttpExceptionFilter(logger));
-  app.setGlobalPrefix("api");
+  app.setGlobalPrefix('api');
 
-  const config = new DocumentBuilder()
-    .setTitle("Chuck Norris random joke API")
-    .setDescription("Documentation for Chuck Norris random joke API")
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Chuck Norris random joke API')
+    .setDescription('Documentation for Chuck Norris random joke API')
     .addBearerAuth({
-      type: 'http', 
-      scheme: "Bearer", 
-      bearerFormat: "JWT", 
-      in: "header"
+      type: 'http',
+      scheme: 'Bearer',
+      bearerFormat: 'JWT',
+      in: 'header',
     })
-    .setVersion("1.0")
-    .build()
+    .setVersion('1.0')
+    .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("documentation", app, document);
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('documentation', app, swaggerDocument);
 
   await app.listen(3000);
 }

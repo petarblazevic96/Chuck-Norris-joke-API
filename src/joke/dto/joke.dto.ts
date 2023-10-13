@@ -1,5 +1,5 @@
 export class SendJokeDto {
-    email: string;
-    value: string;
-    url: string;
-};
+  email: string;
+  value: string;
+  url: string;
+}

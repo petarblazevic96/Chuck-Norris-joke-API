@@ -1,4 +1,4 @@
 export class SendJokeQueueResult {
-    messageId: string;
-    err: any;
+  messageId: string;
+  err: any;
 }

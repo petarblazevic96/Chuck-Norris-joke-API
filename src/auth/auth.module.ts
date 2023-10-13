@@ -9,6 +9,6 @@ import { WinstonLogger } from '../logger/logger.module';
 @Module({
   controllers: [AuthController],
   providers: [AuthService, AuthGuard],
-  imports: [WinstonLogger, UsersModule]
+  imports: [WinstonLogger, UsersModule],
 })
-export class AuthModule { }
+export class AuthModule {}
