@@ -1,10 +1,12 @@
 import * as argon2 from 'argon2';
-import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from './auth.service';
 import { MockFunctionMetadata, ModuleMocker } from 'jest-mock';
+
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
+import { Test, TestingModule } from '@nestjs/testing';
 import { NotFoundException, UnauthorizedException } from '@nestjs/common';
+
+import { AuthService } from './auth.service';
+import { UsersService } from '../users/users.service';
 
 const moduleMocker = new ModuleMocker(global);
 

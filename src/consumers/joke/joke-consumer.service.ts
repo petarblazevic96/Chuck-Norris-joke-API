@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { JokeQueue } from './joke-consumer.model';
 import { InjectModel } from '@nestjs/sequelize';
+
+import { JokeQueue } from './joke-consumer.model';
 import { SaveJokeQueueDto } from './dto/save-joke-queue.dto';
 
 @Injectable()

@@ -1,7 +1,8 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from './users.service';
 import { getModelToken } from '@nestjs/sequelize';
+import { Test, TestingModule } from '@nestjs/testing';
+
 import { User } from './users.model';
+import { UsersService } from './users.service';
 
 const oneUser = {
   firstName: 'user 1',

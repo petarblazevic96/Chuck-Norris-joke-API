@@ -1,18 +1,19 @@
+import { Queue } from 'bull';
+import { AxiosError } from 'axios';
+import { v4 as uuidv4 } from 'uuid';
+import { catchError, firstValueFrom } from 'rxjs';
+
+import { InjectQueue } from '@nestjs/bull';
 import { HttpService } from '@nestjs/axios';
+import { ConfigService } from '@nestjs/config';
 import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { AxiosError } from 'axios';
-import { catchError, firstValueFrom } from 'rxjs';
+
 
 import { SendJokeDto } from './dto/joke.dto';
-import { InjectQueue } from '@nestjs/bull';
-import { Queue } from 'bull';
-import { v4 as uuidv4 } from 'uuid';
-
-import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../users/users.service';
 import { ChuckNorrisApi } from '../config/interfaces';
 

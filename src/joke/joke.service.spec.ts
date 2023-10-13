@@ -1,16 +1,17 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import Bull, { Queue } from 'bull';
-import { JokeService } from './joke.service';
-import { getQueueToken } from '@nestjs/bull';
-import { MockFunctionMetadata, ModuleMocker } from 'jest-mock';
-import { UsersService } from '../users/users.service';
+import Bull from 'bull';
+import { of, throwError } from 'rxjs';
 import { AxiosHeaders, AxiosResponse } from 'axios';
-import { HttpService } from '@nestjs/axios';
-import { NotFoundError, of, throwError } from 'rxjs';
+import { MockFunctionMetadata, ModuleMocker } from 'jest-mock';
+
+import { getQueueToken } from '@nestjs/bull';
+import { Test, TestingModule } from '@nestjs/testing';
 import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+
+import { JokeService } from './joke.service';
+import { UsersService } from '../users/users.service';
 
 const moduleMocker = new ModuleMocker(global);
 

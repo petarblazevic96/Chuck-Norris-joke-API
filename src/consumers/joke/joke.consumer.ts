@@ -1,5 +1,7 @@
+import { Job } from 'bull';
 import * as nodemailer from 'nodemailer';
 
+import { ConfigService } from '@nestjs/config';
 import {
   OnQueueCompleted,
   OnQueueError,
@@ -8,13 +10,12 @@ import {
   Process,
   Processor,
 } from '@nestjs/bull';
+
 import { SendJokeDto } from '../../joke/dto/joke.dto';
-import { Job } from 'bull';
-import { SendJokeQueueResult } from '../../joke/dto/send-joke-queue-result.dto';
-import { JokeConsumerService } from './joke-consumer.service';
-import { ConfigService } from '@nestjs/config';
-import { EmailOptionsConfiguration } from '../../config/interfaces';
 import { CustomLogger } from '../../logger/logger.service';
+import { JokeConsumerService } from './joke-consumer.service';
+import { EmailOptionsConfiguration } from '../../config/interfaces';
+import { SendJokeQueueResult } from '../../joke/dto/send-joke-queue-result.dto';
 
 @Processor('email')
 export class JokeEmailConsumer {

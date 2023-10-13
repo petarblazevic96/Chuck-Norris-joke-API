@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
+import { JwtModule } from '@nestjs/jwt';
+import { BullModule } from '@nestjs/bull';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { AuthModule } from './auth/auth.module';
-import { UsersModule } from './users/users.module';
 import { JokeModule } from './joke/joke.module';
-import { BullModule } from '@nestjs/bull';
-import { WinstonLogger } from './logger/logger.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
-import { JwtModule } from '@nestjs/jwt';
+import { UsersModule } from './users/users.module';
+import { WinstonLogger } from './logger/logger.module';
 import { DatabaseConfiguration, RedisConfiguration } from './config/interfaces';
 @Module({
   imports: [

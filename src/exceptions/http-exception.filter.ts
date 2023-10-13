@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 import {
   ArgumentsHost,
   Catch,
@@ -6,7 +8,7 @@ import {
   HttpStatus,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { Request, Response } from 'express';
+
 import { CustomLogger } from '../logger/logger.service';
 
 @Catch(HttpException)

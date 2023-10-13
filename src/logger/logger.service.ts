@@ -1,9 +1,10 @@
-import * as winston from 'winston';
-
-import { Injectable, LogLevel, LoggerService, Scope } from '@nestjs/common';
-import { AbstractConfigSetLevels } from 'winston/lib/winston/config';
 import _ from 'lodash';
+import * as winston from 'winston';
+import { AbstractConfigSetLevels } from 'winston/lib/winston/config';
+
 import { ConfigService } from '@nestjs/config';
+import { Injectable, LogLevel, LoggerService, Scope } from '@nestjs/common';
+
 import { EnvConfiguration } from '../config/interfaces';
 
 @Injectable()
